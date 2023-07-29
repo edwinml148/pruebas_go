@@ -1,12 +1,9 @@
-FROM golang
-
-RUN mkdir /app
-
-ADD . /app
-
+FROM golang:alpine
+RUN apk add --no-cache git
 WORKDIR /app
-
-RUN go build -o main ./main.go
-
-EXPOSE 8080
-CMD [ "/app/main" ]
+COPY go.* .
+COPY *air.toml .
+RUN go mod download
+COPY . .
+RUN go install github.com/cosmtrek/air@latest
+CMD ["air", "-c", ".air.toml"]

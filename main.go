@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/edwinml148/pruebas_go/routes"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
@@ -12,9 +13,7 @@ func main() {
 	fmt.Println(uuid.New().String())
 	r := mux.NewRouter()
 
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hola mundo"))
-	})
+	r.HandleFunc("/", routes.HomeHandler)
 
 	http.ListenAndServe(":3000", r)
 
